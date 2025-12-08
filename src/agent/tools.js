@@ -1,7 +1,10 @@
 import { PARTS, MODELS } from './mock_data.js';
 
 //new function
-function sortPartsByRatingAndSponsor(parts = []) {
+export function sortPartsByRatingAndSponsor(parts = []) {
+    if (!parts || !Array.isArray(parts)) {
+        return [];
+    }
     return [...parts].sort((a, b) => {
         const ratingA = a.rating ?? 0;
         const ratingB = b.rating ?? 0;
