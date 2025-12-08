@@ -23,14 +23,20 @@ function ChatWindow() {
       scrollToBottom();
   }, [messages]);
 
-  const handleSend = async (input) => {
-    if (input.trim() !== "") {
+  const handleSend = async (value) => {
+
+    const trimmed = (value ?? input).trim();
+
+    if (trimmed !== "") {
       // Set user message
-      setMessages(prevMessages => [...prevMessages, { role: "user", content: input }]);
+      setMessages(prevMessages => [
+        ...prevMessages, 
+        { role: "user", content: trimmed }]);
       setInput("");
 
       // Call API & set assistant message
-      const newMessage = await getAIMessage(input);
+      const newMessage = await getAIMessage(trimmed);
+
       setMessages(prevMessages => [...prevMessages, newMessage]);
     }
   };
@@ -42,6 +48,29 @@ function ChatWindow() {
                   {message.content && (
                       <div className={`message ${message.role}-message`}>
                           <div dangerouslySetInnerHTML={{__html: marked(message.content).replace(/<p>|<\/p>/g, "")}}></div>
+                      </div>
+                  )}
+                  {message.products && message.products.length > 0 && (
+                      <div className="products-container">
+                          {message.products.map((product, productIndex) => (
+                              <div key={productIndex} className="product-card">
+                                  {product.imageUrl && (
+                                      <img src={product.imageUrl} alt={product.name} className="product-image" />
+                                  )}
+                                  <div className="product-info">
+                                      <div className="product-name">{product.name}</div>
+                                      <div className="product-part-number">{product.partNumber}</div>
+                                      {product.description && (
+                                          <div className="product-description">{product.description}</div>
+                                      )}
+                                      {product.compatibleModels && product.compatibleModels.length > 0 && (
+                                          <div className="product-compatible">
+                                              Compatible with: {product.compatibleModels.join(", ")}
+                                          </div>
+                                      )}
+                                  </div>
+                              </div>
+                          ))}
                       </div>
                   )}
               </div>
@@ -60,7 +89,7 @@ function ChatWindow() {
               }}
               rows="3"
             />
-            <button className="send-button" onClick={handleSend}>
+            <button className="send-button" onClick={() => handleSend(input)}>
               Send
             </button>
           </div>
