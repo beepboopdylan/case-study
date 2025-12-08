@@ -60,6 +60,13 @@ function ChatWindow() {
                                   <div className="product-info">
                                       <div className="product-name">{product.name}</div>
                                       <div className="product-part-number">{product.partNumber}</div>
+                                      {(product.rating || product.rating === 0) && (
+                                          <div className="product-rating">
+                                              <span className="stars">⭐ {product.rating?.toFixed ? product.rating.toFixed(1) : product.rating}</span>
+                                              {product.ratingCount ? <span className="rating-count">({product.ratingCount})</span> : null}
+                                              {product.sponsoredPriority > 0 && <span className="sponsored-badge">Sponsored</span>}
+                                          </div>
+                                      )}
                                       {product.description && (
                                           <div className="product-description">{product.description}</div>
                                       )}

@@ -8,6 +8,9 @@ export const PARTS = [
       brand: 'Whirlpool',
       description: 'Helps seal the refrigerator door to keep cold air in.',
       imageUrl: 'https://via.placeholder.com/80x80?text=PS11752778',
+      rating: 4.6, // new
+      ratingCount: 182, // new
+      sponsoredPriority: 0, // new
       compatibleModels: ['WRS325FDAM04', 'WRT311FZDW00'],
       installSteps: [
         'Turn off power to the refrigerator.',
@@ -23,6 +26,9 @@ export const PARTS = [
       brand: 'Whirlpool',
       description: 'Replacement ice maker assembly for Whirlpool refrigerators.',
       imageUrl: 'https://via.placeholder.com/80x80?text=ICE+MAKER',
+      rating: 4.8, // new
+      ratingCount: 246, // new
+      sponsoredPriority: 2, // new
       compatibleModels: ['WRF560SEHZ00'],
     },
   ];

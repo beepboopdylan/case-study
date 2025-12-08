@@ -1,5 +1,22 @@
 import { PARTS, MODELS } from './mock_data.js';
 
+//new function
+function sortPartsByRatingAndSponsor(parts = []) {
+    return [...parts].sort((a, b) => {
+        const ratingA = a.rating ?? 0;
+        const ratingB = b.rating ?? 0;
+        if (ratingA !== ratingB) {
+            return ratingB - ratingA; // higher rating first
+        }
+        const sponsorA = a.sponsoredPriority ?? 0;
+        const sponsorB = b.sponsoredPriority ?? 0;
+        if (sponsorA !== sponsorB) {
+            return sponsorB - sponsorA; // higher sponsor boost second
+        }
+        return (b.ratingCount ?? 0) - (a.ratingCount ?? 0); // more reviews as tie-breaker
+    });
+}
+
 export function getPartsByNumber(partNumber) {
     if (!partNumber) {
         return null;
@@ -51,5 +68,5 @@ export function troubleshootIssue({ applianceType, symptom }) {
       suggestions.push(...iceParts);
     }
 
-    return suggestions;
+    return sortPartsByRatingAndSponsor(suggestions);
 }
